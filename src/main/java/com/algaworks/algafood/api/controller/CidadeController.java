@@ -32,17 +32,6 @@ public class CidadeController {
 	@Autowired
 	private CidadeService cidadeService;
 	
-	@PostMapping
-	public ResponseEntity<?> adicionar(Cidade cidade) {
-		try {
-			cidade = cidadeService.salvar(cidade);
-			return ResponseEntity.status(HttpStatus.CREATED).body(cidade);
-
-		} catch (EntidadeNaoEncontradaException e) {
-			return ResponseEntity.badRequest().body(e.getMessage());
-		}
-	}
-	
 	@GetMapping
 	public List<Cidade> listar() {
 		return cidadeRepository.findAll();
@@ -57,6 +46,17 @@ public class CidadeController {
 		}
 		
 		return ResponseEntity.notFound().build();
+	}
+
+	@PostMapping
+	public ResponseEntity<?> adicionar(Cidade cidade) {
+		try {
+			cidade = cidadeService.salvar(cidade);
+			return ResponseEntity.status(HttpStatus.CREATED).body(cidade);
+
+		} catch (EntidadeNaoEncontradaException e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
 	}
 	
 	@PutMapping("/{cidadeId}")
